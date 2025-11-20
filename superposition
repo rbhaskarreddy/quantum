@@ -1,0 +1,35 @@
+!pip install qiskit
+
+from qiskit import QuantumCircuit
+
+!pip install qiskit-aer
+
+from qiskit_aer import AerSimulator
+
+from qiskit.visualization import plot_histogram
+
+import matplotlib.pyplot as plt
+
+# create a 1-qubit circuit with 1 classical bit
+qc = QuantumCircuit(1, 1)
+# apply a Hadamard gate to the qubit
+qc.h(0)
+
+# Measure the qubit
+qc.measure(0,0)
+
+print (qc)
+
+# Run simulation
+backend = AerSimulator()
+result = backend.run(qc, shots=1024).result()
+counts = result.get_counts()
+
+print ("\nMeasurement Results", counts)
+
+# polt results
+
+plt.hist(counts)
+plt.xlabel('qubits')
+plt.ylabel('probability')
+plt.show()
